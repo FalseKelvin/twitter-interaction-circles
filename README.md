@@ -1,5 +1,5 @@
 
-![Example](circle.png)
+
 
 # Twitter Interaction Circle
 
