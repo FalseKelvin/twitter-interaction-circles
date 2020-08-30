@@ -35,7 +35,9 @@ function countReplies(interactions, timeline, screen_name) {
 	for (const post of timeline) {
 		if (
 			!!post.in_reply_to_user_id_str &&
-			post.in_reply_to_screen_name.toLowerCase() !== screen_name
+			post.in_reply_to_screen_name.toLowerCase() !== screen_name &&
+      //defiTerms.includes(post.text) // checks if the content of the reply is defi related
+      !post.possibly_sensitive
 		) {
 			addRecord(
 				interactions,
@@ -60,7 +62,9 @@ function countRetweets(interactions, timeline, screen_name) {
 		if (
 			post.retweeted_status &&
 			post.retweeted_status.user &&
-			post.retweeted_status.user.screen_name.toLowerCase() !== screen_name
+			post.retweeted_status.user.screen_name.toLowerCase() !== screen_name &&
+      //defiTerms.includes(post.text) // checks if the content of the reply is defi related
+      !post.possibly_sensitive
 		) {
 			addRecord(
 				interactions,
@@ -128,8 +132,8 @@ module.exports = async function getInteractions(screen_name, layers) {
 	for (const [key, interaction] of Object.entries(interactions)) {
 		let total = 0;
 		total += interaction.like;
-		total += interaction.reply * 1.1;
-		total += interaction.retweet * 1.3;
+		total += interaction.reply * 10.1;
+		total += interaction.retweet * 10.3;
 
 		tally.push({
 			id: interaction.id,
